@@ -18,6 +18,11 @@ We include the original codebase for ease of reproducibility and place the code 
 </p>
 
 
+<p align="center">
+	<img src="fig/matbench_results.png" alt="photo not available" width="65%" height="65%">
+</p>
+
+
 ## Content ##
 0. [Environment Setup](#environment-setup)
 0. [File Structure](#file-structure)
