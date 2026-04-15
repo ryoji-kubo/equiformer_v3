@@ -46,10 +46,21 @@ See [here](experimental/docs/env_setup.md) for setting up the environment.
 1. The OC20 S2EF dataset can be downloaded by following instructions in their [GitHub repository](https://github.com/Open-Catalyst-Project/ocp/blob/5a7738f9aa80b1a9a7e0ca15e33938b4d2557edd/DATASET.md#download-and-preprocess-the-dataset).
 
 2. For example, we can download the OC20 S2EF-2M dataset by running:
+
     ```bash
+        # Incorrect Download, run the next cell
         cd ocp
         python scripts/download_data.py --task s2ef --split "2M" --num-workers 8
     ```
+
+    ```bash
+        # for downloading the 200k split
+        cd src/fairchem/core
+        python scripts/download_data.py --task s2ef --split "200k" --num-workers 8
+        # also obtain the val_id subset
+        python scripts/download_data.py --task s2ef --split "val_id" --num-workers 8
+    ```
+
 
 3. We note that we remove `--ref-energy` since we now train on total energy labels instead of adsorption energy labels.
 
