@@ -59,15 +59,18 @@ See [here](experimental/docs/env_setup.md) for setting up the environment.
         python scripts/download_data.py --task s2ef --split "200k" --num-workers 8
         # also obtain the val_id subset
         python scripts/download_data.py --task s2ef --split "val_id" --num-workers 8
+        # create the metadata.npz file
+        python scripts/make_lmdb_sizes.py --data-path ../data/s2ef/200k/train --num-workers 8
+        python scripts/make_lmdb_sizes.py --data-path ../data/s2ef/all/val_id --num-workers 8
     ```
+    
+    For fast validation, create a small val_id_mini split using `python shrink_lmdb.py`. Create the metadata.npz file for it as well.
 
 
 3. We note that we remove `--ref-energy` since we now train on total energy labels instead of adsorption energy labels.
 
-<!-- 
-4. We recommend evaluating the trained [checkpoints](#checkpoint) on the `val_id` subset to make sure the energy conversion is correct before running any training.
--->
 
+4. We recommend evaluating the trained [checkpoints](#checkpoint) on the `val_id` subset to make sure the energy conversion is correct before running any training.
 
 ### MPtrj
 
@@ -143,6 +146,23 @@ We place all the files relevant to our work under [`experimental`](experimental)
     ```bash
         sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@2M_g@8.sh
     ```
+
+We train a model on the `200k` split and evaluate on the `val_iid` split by the following command:
+```bash
+# for training
+sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@200k_g@4_debug.sh
+# for inference
+sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@200k_g@4_debug_inf.sh
+```
+
+**Reproduction Result**
+
+|Model	|Split	|Download	|val force MAE (meV / Å) |val energy MAE (meV) |
+|---	|---	|---	|---	|---	| 
+|EquiformerV2_83M_2M on val_iid split	|2M	|-|16.7 | 217 |
+|EquiformerV2_83M_200k on val_iid split |200k |-|31.2|347|
+|EquiformerV3_91M_200k on val_iid split |200k | [checkpoint](https://huggingface.co/Ryoji/equiformer_v3_checkpoints/blob/main/eqv3_91M_200k.pt) \| [training](https://wandb.ai/ryoji-nus/equiformer_v3_oc20-2M_ablation/runs/2026-04-17-08-46-56-base) \| [train_config](experimental/configs/oc20/200k/equiformer_v3/experiments/base_N@8-L@6-C@128-attn-hidden@64-ffn@512-envelope-num-rbf@128_merge-layer-norm_gates2-gridmlp_use-gate-force-head_wd@1e-3-grad-clip@100_lin-ref-e@4_debug.yml) \| [eval_config](experimental/configs/oc20/200k/equiformer_v3/experiments/base_N@8-L@6-C@128-attn-hidden@64-ffn@512-envelope-num-rbf@128_merge-layer-norm_gates2-gridmlp_use-gate-force-head_wd@1e-3-grad-clip@100_lin-ref-e@4_debug_inf.yml) |27.7|332|
+
 
 
 ### MPtrj
