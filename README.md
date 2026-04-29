@@ -155,6 +155,17 @@ sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@200k_
 sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@200k_g@4_debug_inf.sh
 ```
 
+We can use EquiformerV2 (57M) on this repo as well. Follow this script:
+```bash
+# for training
+sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v2_splits@200k_g@4_debug.sh
+
+# TO DO: RUN INFERENCE AND UPLOAD CHECKPOINT TO HF
+# for inference
+sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v2_splits@200k_g@4_debug_inf.sh
+```
+
+
 **Reproduction Result**
 
 |Model	|Split	|Download	|val force MAE (meV / Å) |val energy MAE (meV) |
@@ -162,6 +173,7 @@ sh experimental/scripts/train/oc20/s2ef/equiformer_v3/equiformer_v3_splits@200k_
 |EquiformerV2_83M_2M on val_iid split	|2M	|-|16.7 | 217 |
 |EquiformerV2_83M_200k on val_iid split |200k |-|31.2|347|
 |EquiformerV3_91M_200k on val_iid split |200k | [checkpoint](https://huggingface.co/Ryoji/equiformer_v3_checkpoints/blob/main/eqv3_91M_200k.pt) \| [training](https://wandb.ai/ryoji-nus/equiformer_v3_oc20-2M_ablation/runs/2026-04-17-08-46-56-base) \| [train_config](experimental/configs/oc20/200k/equiformer_v3/experiments/base_N@8-L@6-C@128-attn-hidden@64-ffn@512-envelope-num-rbf@128_merge-layer-norm_gates2-gridmlp_use-gate-force-head_wd@1e-3-grad-clip@100_lin-ref-e@4_debug.yml) \| [eval_config](experimental/configs/oc20/200k/equiformer_v3/experiments/base_N@8-L@6-C@128-attn-hidden@64-ffn@512-envelope-num-rbf@128_merge-layer-norm_gates2-gridmlp_use-gate-force-head_wd@1e-3-grad-clip@100_lin-ref-e@4_debug_inf.yml) |27.7|332|
+|EquiformerV2_57M_200k on val_iid split |200k | [checkpoint]() \| [training](https://wandb.ai/ryoji-nus/equiformer_v3_oc20-2M_ablation/runs/2026-04-28-19-37-36-base/overview) \| [train_config](experimental/configs/oc20/200k/equiformer_v2/experiments/eqV2_57M.yml) \| [eval_config](experimental/configs/oc20/200k/equiformer_v2/experiments/eqV2_57M_inf.yml) |TO DO| TO DO|
 
 
 
