@@ -14,8 +14,8 @@ from fairchem.core.preprocessing import AtomsToGraphs
 from fairchem.core.common.utils import radius_graph_pbc
 
 
-_JSON_PATH = './MPtrj_2022.9_full.json'
-_OUTPUT_DIR = './aselmdb_uncorrected_total_energy'
+_JSON_PATH = './dataset/mptrj/MPtrj_2022.9_full.json'
+_OUTPUT_DIR = './dataset/mptrj/aselmdb_uncorrected_total_energy'
 _NUM_CHUNK_LMDB_FILES = 15
 
 _cutoff = 6.0

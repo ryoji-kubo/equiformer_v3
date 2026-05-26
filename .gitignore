@@ -2,3 +2,4 @@ src/fairchem/data
 *.pyc
 models/
 checkpoints/
+dataset/

@@ -97,6 +97,11 @@ See [here](experimental/docs/env_setup.md) for setting up the environment.
         cp metadata_num-edges.npz metadata.npz
     ```
 
+[Ryoji] To create a 160k split of the Mptrj dataset, we can use the following command after step 3&4:
+```bash
+python experimental/datasets/mptrj_create_subset_aselmdb.py --source-dir dataset/mptrj/aselmdb_uncorrected_total_energy --target-dir dataset/mptrj/aselmdb_uncorrected_total_energy_160k --seed 0 --num-samples 160000
+```
+Run step 5 on the new subsampled dataset.
 
 ### OMat24 and sAlex
 
@@ -118,6 +123,13 @@ See [here](experimental/docs/env_setup.md) for setting up the environment.
     ```
 
 3. For OMat24, we repeat 2. for all directories under `train` and `val`. That is, we need to do that for `aimd-from-PBE-1000-npt`, `aimd-from-PBE-1000-nvt`, `aimd-from-PBE-3000-npt`, `aimd-from-PBE-3000-nvt`, `rattled-1000`, `rattled-1000-subsampled`, `rattled-300`, `rattled-300-subsampled`, `rattled-500`, `rattled-500-subsampled`, `rattled-relax`.
+
+[Ryoji] To create a 30k validation split of sAlex dataset, we can use the following command after download:
+```bash
+python experimental/datasets/mptrj_create_subset_aselmdb.py --source-dir dataset/salex/val --target-dir dataset/salex/val_30k --seed 0 --num-samples 30000
+```
+Run step 5 on the new subsampled dataset.
+
 
 
 ## File Structure ##

@@ -4,8 +4,9 @@ dataset:
     src:
       #- /data/NFS/radish/ylliao/omat24_dataset/mptrj/aselmdb_uncorrected_total_energy
       #- /home/ubuntu/h100x8/datasets/omat24/mptrj/aselmdb_uncorrected_total_energy
-      - dataset/mptrj/aselmdb_uncorrected_total_energy
+      # - /mnt/data/projects/yilunliao/datasets/omat24/mptrj/aselmdb_uncorrected_total_energy
       #- /mnt/data/projects/yilunliao/datasets/omat24/mptrj/aselmdb_uncorrected_total_energy_expand-min@20-no-repeat
+      - dataset/mptrj/aselmdb_uncorrected_total_energy_160k
     a2g_args:
       r_energy: True      # already use `uncorrected_total_energy` after pre-processing
       r_forces: True
@@ -71,7 +72,7 @@ dataset:
     src:
       #- /data/NFS/radish/ylliao/omat24_dataset/mptrj/aselmdb_uncorrected_total_energy_100k
       #- /data/NFS/radish/ylliao/omat24_dataset/salex/val_30k
-      - /mnt/data/projects/yilunliao/datasets/omat24/salex/val_30k
+      - dataset/salex/val_30k
     a2g_args:
       r_energy: True      # already use `uncorrected_total_energy` after pre-processing
       r_forces: True
@@ -189,9 +190,12 @@ model:
 
 
 optim:
-  batch_size:                   64
-  grad_accumulation_steps:      1
-  eval_batch_size:              64
+  # batch_size:                   64
+  batch_size:                   16
+  # grad_accumulation_steps:      1
+  grad_accumulation_steps:      4
+  # eval_batch_size:              64
+  eval_batch_size:              16
   load_balancing:               atoms
   num_workers:                  0
   lr_initial:                   0.0002
@@ -211,7 +215,8 @@ optim:
   clip_grad_norm:               100
   ema_decay:                    0.999
 
-  eval_every:                   5000
+  # eval_every:                   5000
+  eval_every:                   20000
   
   use_denoising_pos:            True
   denoising_pos_params:

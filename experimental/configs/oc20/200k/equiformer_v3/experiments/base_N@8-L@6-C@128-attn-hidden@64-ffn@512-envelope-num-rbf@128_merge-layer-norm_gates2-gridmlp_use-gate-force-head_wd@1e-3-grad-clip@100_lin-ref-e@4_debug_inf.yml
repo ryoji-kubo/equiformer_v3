@@ -4,7 +4,7 @@ trainer:              equiformer_v3_dens_trainer
 dataset:
   train:
     format:           oc20_total_energy_lmdb
-    src:              /home/ryoji/equiformer_v3/src/fairchem/data/s2ef/200k/train
+    src:              src/fairchem/data/s2ef/200k/train
     key_mapping:
       energy:         energy
       forces:         forces
@@ -20,7 +20,7 @@ dataset:
     lin_ref:          experimental/configs/oc20/2M/reference_data/coeff_2M.npz
     oc20_ref:         experimental/configs/oc20/2M/reference_data/oc20_ref.pkl
   val:
-    src:              /home/ryoji/equiformer_v3/src/fairchem/data/s2ef/all/val_id
+    src:              src/fairchem/data/s2ef/all/val_id
     use_total_energy: True
     lin_ref:          experimental/configs/oc20/2M/reference_data/coeff_2M.npz
     oc20_ref:         experimental/configs/oc20/2M/reference_data/oc20_ref.pkl
