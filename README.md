@@ -103,6 +103,11 @@ python experimental/datasets/mptrj_create_subset_aselmdb.py --source-dir dataset
 ```
 Run step 5 on the new subsampled dataset.
 
+To share data, run:
+```bash
+rsync -avz -e ssh dataset/mptrj/aselmdb_uncorrected_total_energy_160k ryoji@deeplearn11.ddns.comp.nus.edu.sg:/home/ryoji/equiformer_v3/dataset/mptrj
+```
+
 ### OMat24 and sAlex
 
 1. The datasets can be found [here](https://huggingface.co/datasets/facebook/OMAT24).
@@ -206,6 +211,9 @@ The preprocessing of MPtrj data is [here](#mptrj).
     d. Run:
     ```bash
         bash experimental/scripts/train/omat24/equiformer_v3/equiformer_v3_mptrj.sh
+
+        # For training on 160k subsplit on 4 GPUs
+        bash experimental/scripts/train/omat24/equiformer_v3/equiformer_v3_mptrj_160k.sh
     ```
 
 
