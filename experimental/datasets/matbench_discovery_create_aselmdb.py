@@ -5,8 +5,8 @@ import numpy as np
 from matbench_discovery.data import DataFiles, ase_atoms_from_zip
 
 
-_output_aselmdb_dir = '/data/NFS/radish/ylliao/omat24_dataset/matbench_discovery'
-
+# _output_aselmdb_dir = '/data/NFS/radish/ylliao/omat24_dataset/matbench_discovery'
+_output_aselmdb_dir = '/home/ryoji/equivarient/equiformer_v3/dataset/matbench_discovery'
 
 if __name__ == '__main__':
     wbm_init_atoms = ase_atoms_from_zip(DataFiles.wbm_initial_atoms.path)

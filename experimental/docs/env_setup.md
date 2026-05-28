@@ -27,4 +27,12 @@
         git checkout 375a8d6
         pip install -e .
     ```
+
+[Ryoji]
+
+```bash
+pip install ipykernel
+pip install seaborn
+
+```
     

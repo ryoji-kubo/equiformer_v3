@@ -94,6 +94,11 @@ See [here](experimental/docs/env_setup.md) for setting up the environment.
         
         # Rename to `metadata.npz`
         cd $ASELMDB_DATASET
+        # cp metadata_num-edges.npz metadata.npz
+
+        # Deprecate the original `metadata.npz`
+        mv metadata.npz metadata_num-nodes.npz
+        # Instead, use the one recording the number of edges
         cp metadata_num-edges.npz metadata.npz
     ```
 
@@ -225,6 +230,10 @@ The preprocessing of MPtrj data is [here](#mptrj).
         CHECKPOINT=""
 
         python experimental/tasks/remove_key_from_checkpoint.py --input-path $CHECKPOINT --remove-key energy_block
+
+         
+        # Error with the above flag
+        python experimental/tasks/remove_key_from_checkpoint.py --input-path $CHECKPOINT --remove-name energy_block
     ```
 
     b. This creates a new checkpoint (`.../checkpoint_no-energy_block.pt`), which is used to initialize model weights during gradient fine-tuning.
@@ -243,6 +252,9 @@ The preprocessing of MPtrj data is [here](#mptrj).
     e. Run:
     ```bash
         bash experimental/scripts/train/omat24/equiformer_v3/equiformer_v3_grad_mptrj.sh
+
+        # for 160k (removed --amp flag to run it in FP32)
+        bash experimental/scripts/train/omat24/equiformer_v3/equiformer_v3_grad_mptrj_160k.sh
     ```
 
 
