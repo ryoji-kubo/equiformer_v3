@@ -3,3 +3,5 @@ src/fairchem/data
 models/
 checkpoints/
 dataset/
+tmux/
+results/

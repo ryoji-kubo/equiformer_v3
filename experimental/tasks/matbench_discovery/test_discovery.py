@@ -228,7 +228,7 @@ class RelaxJob(Checkpointable):
                     self.num_jobs
                 )
                 with open((self.output_path / output_err_filename), 'a') as txt_file:
-                    txt_file.write('{}\n'.format(mat_id))
+                    txt_file.write('{}\n'.format(material_id))
                 continue
 
 

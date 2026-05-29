@@ -382,9 +382,18 @@ Trained checkpoints can be found in the [HuggingFace page](https://huggingface.c
 
     b. Modify [the path to checkpoint](experimental/scripts/eval/matbench_discovery/discovery.sh#L1), [the path to save results](experimental/scripts/eval/matbench_discovery/discovery.sh#L2), and [the path to the dataset](experimental/scripts/eval/matbench_discovery/discovery.sh#L3) in the [evaluation script](experimental/scripts/eval/matbench_discovery/discovery.sh).
 
+    [Ryoji] Strip the `torch.compile` keys from the checkpoint to prevent mapping errors during evaluation:
+    ```bash
+        # CHECKPOINT is the path to your checkpoint.pt
+        python experimental/tasks/remove_torch_compile_from_checkpoint_v2.py --input-path $CHECKPOINT
+    ```
+    After running this, make sure to update your evaluation script to use the newly generated `_no-torch-compile.pt` file.
+
     c. Run the calculation script:
     ```bash
         sh experimental/scripts/eval/matbench_discovery/discovery.sh
+
+        sh experimental/scripts/eval/matbench_discovery/discovery_mptrj_160k_direct.sh
     ```
 
     d. Postprocess the calculation:
