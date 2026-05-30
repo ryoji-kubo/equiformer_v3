@@ -59,6 +59,7 @@ def _format_table(full: dict[str, float], k10: dict[str, float], uniq: dict[str,
         "MAE",
         "RMSE",
         "R2",
+        "missing_preds",
     ]
 
     rows = []
@@ -194,10 +195,15 @@ def main(
     uniq_proto_prevalence = (
         df_wbm.query(MbdKey.uniq_proto)[MbdKey.each_true] <= STABILITY_THRESHOLD
     ).mean()
+
+    uniq_idx = df_wbm.query(MbdKey.uniq_proto).index
+    print(f'[discovery] Missing predictions in Full subset: {each_pred.isna().sum():,}')
+    print(f'[discovery] Missing predictions in Unique subset: {each_pred.loc[uniq_idx].isna().sum():,}')
+
     #   Full
     metrics_full = stable_metrics(each_true, each_pred, stability_threshold=STABILITY_THRESHOLD, fillna=True)
+    metrics_full["missing_preds"] = int(each_pred.isna().sum())
     #   Unique
-    uniq_idx = df_wbm.query(MbdKey.uniq_proto).index
     metrics_uniq = stable_metrics(
         each_true.loc[uniq_idx],
         each_pred.loc[uniq_idx],
@@ -205,8 +211,10 @@ def main(
         fillna=True,
     )
     metrics_uniq['DAF'] = metrics_uniq['Precision'] / uniq_proto_prevalence
+    metrics_uniq["missing_preds"] = int(each_pred.loc[uniq_idx].isna().sum())
     #   10K
     top10k_idx = each_pred.loc[uniq_idx].nsmallest(10_000).index
+    print(f'[discovery] Missing predictions in 10k subset: {each_pred.loc[top10k_idx].isna().sum():,}')
     metrics_10k = stable_metrics(
         each_true.loc[top10k_idx],
         each_pred.loc[top10k_idx],
@@ -215,6 +223,7 @@ def main(
     )
     print(metrics_10k)
     metrics_10k['DAF'] = metrics_10k['Precision'] / uniq_proto_prevalence
+    metrics_10k["missing_preds"] = int(each_pred.loc[top10k_idx].isna().sum())
     table_str = _format_table(metrics_full, metrics_10k, metrics_uniq)
     print(table_str)
 
@@ -291,6 +300,20 @@ def main(
         f"n_sym_ops_mae={metrics_all[str(Key.n_sym_ops_mae)]:.4f}, "
         f"sym_match={metrics_all[str(Key.symmetry_match)]:.3f}"
     )
+
+    # Save metrics to CSV files
+    df_metrics = pd.DataFrame({
+        "full": metrics_full,
+        "10k": metrics_10k,
+        "unique": metrics_uniq,
+    }).T
+    metrics_csv_path = os.path.join(input_dir, "discovery_metrics.csv")
+    df_metrics.to_csv(metrics_csv_path, index_label="subset")
+    print(f"Successfully saved discovery metrics to: {metrics_csv_path}")
+
+    geo_metrics_csv_path = os.path.join(input_dir, "geo_opt_metrics.csv")
+    pd.DataFrame([metrics_all]).to_csv(geo_metrics_csv_path, index=False)
+    print(f"Successfully saved geo-opt metrics to: {geo_metrics_csv_path}")
 
     """
     # Compute normalized performance score (CPS) using UNIQUE prototype metrics
