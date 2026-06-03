@@ -421,6 +421,8 @@ Trained checkpoints can be found in the [HuggingFace page](https://huggingface.c
     b. Run the script:
     ```bash
         sh experimental/scripts/eval/matbench_discovery/kappa.sh
+
+        sh experimental/scripts/eval/matbench_discovery/kappa_mptrj_160k_direct.sh
     ```
 
     c. The results will be printed out after running the above command. If there is `2.0`, it is possibly because a certain structure hits out-of-memory error on GPUs. We can run the command on CPU for those structures.
