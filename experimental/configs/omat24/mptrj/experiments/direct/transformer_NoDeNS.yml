@@ -1,0 +1,143 @@
+dataset:
+  train:
+    format: ase_db
+    src:
+      - dataset/mptrj/aselmdb_uncorrected_total_energy_nodes
+    a2g_args:
+      r_energy: True
+      r_forces: True
+      r_stress: True
+    transforms:
+      normalizer:
+        energy:
+          mean: 0.0
+          rmsd: 0.8124567446457275
+        forces:
+          mean: 0.0
+          rmsd: 0.8124567446457275
+        stress:
+          mean: 0.0
+          rmsd: 0.8124567446457275
+      element_references:
+        energy:
+          file: experimental/configs/omat24/mptrj/preprocessing/equiformer_v2_mptrj_energy_element_references.npz
+
+  val:
+    format: ase_db
+    src:
+      - dataset/salex/val_30k_nodes
+    a2g_args:
+      r_energy: True
+      r_forces: True
+      r_stress: True
+
+
+trainer: equiformer_v3_dens_trainer
+
+
+logger:
+  name: wandb
+  project: equiformer_v3_mptrj
+
+
+hide_eval_progressbar: False
+
+
+evaluation_metrics:
+  primary_metric: forces_mae
+  metrics:
+    energy:
+      - mae
+      - per_atom_mae
+    forces:
+      - mae
+      - cosine_similarity
+    stress:
+      - mae
+
+
+outputs:
+  energy:
+    level: system
+    property: energy
+  forces:
+    level: atom
+    property: forces
+    train_on_free_atoms: True
+    eval_on_free_atoms: True
+  stress:
+    level: system
+    property: stress
+
+
+loss_functions:
+  - energy:
+      fn: per_atom_mae
+      coefficient: 20
+  - forces:
+      fn: l2mae
+      coefficient: 20
+  - stress:
+      fn: mae
+      coefficient: 5
+
+
+model:
+  name: transformer
+
+  max_num_elements: 128
+  embed_dim: 768
+  num_heads: 12
+  num_layers: 12
+  dropout: 0.05
+
+  position_scale: 1.0
+  center_positions: True
+  include_cell_energy: True
+  include_cell_stress: True
+
+  regress_forces: True
+  regress_stress: True
+  direct_prediction: True
+  avg_num_nodes: 1.0
+
+
+optim:
+  batch_size: 64
+  grad_accumulation_steps: 1
+  eval_batch_size: 64
+  load_balancing: atoms
+  num_workers: 8
+  lr_initial: 0.0002
+
+  optimizer: AdamW
+  optimizer_params:
+    weight_decay: 0.001
+    betas: [0.9, 0.95]
+
+  scheduler: LambdaLR
+  scheduler_params:
+    lambda_type: cosine
+    warmup_factor: 0.0
+    warmup_epochs: 0.1
+    lr_min_factor: 0.01
+
+  max_epochs: 70
+  clip_grad_norm: 100
+  ema_decay: 0.999
+  eval_every: 20000
+
+  use_denoising_pos: False
+  denoising_pos_params:
+    prob: 0.5
+    fixed_noise_std: True
+    std: 0.025
+    corrupt_ratio: 0.5
+    num_steps: 50
+    std_low: 0.01
+    std_high: 0.5
+    min_num_atoms: null
+    strict_max_ratio: 0.75
+  denoising_pos_coefficient: 10
+
+  use_compile: False

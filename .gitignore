@@ -1,6 +1,6 @@
 src/fairchem/data
 *.pyc
-models/
+logs/
 checkpoints/
 dataset/
 tmux/
