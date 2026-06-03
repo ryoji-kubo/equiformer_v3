@@ -113,6 +113,8 @@ To share data, run:
 rsync -avz -e ssh dataset/mptrj/aselmdb_uncorrected_total_energy_160k ryoji@deeplearn11.ddns.comp.nus.edu.sg:/home/ryoji/equiformer_v3/dataset/mptrj
 ```
 
+For the transformer models, we do not care about the number of edges, so we instead make a copy of the dataset with the original metadata file.
+
 ### OMat24 and sAlex
 
 1. The datasets can be found [here](https://huggingface.co/datasets/facebook/OMAT24).
@@ -219,6 +221,9 @@ The preprocessing of MPtrj data is [here](#mptrj).
 
         # For training on 160k subsplit on 4 GPUs
         bash experimental/scripts/train/omat24/equiformer_v3/equiformer_v3_mptrj_160k.sh
+
+        # training transformer
+        bash experimental/scripts/train/omat24/transformer/transformer_mptrj_160k_NoDeNS.sh
     ```
 
 
@@ -394,6 +399,8 @@ Trained checkpoints can be found in the [HuggingFace page](https://huggingface.c
         sh experimental/scripts/eval/matbench_discovery/discovery.sh
 
         sh experimental/scripts/eval/matbench_discovery/discovery_mptrj_160k_direct.sh
+
+        sh experimental/scripts/eval/matbench_discovery/discovery_mptrj_160k_grad.sh
     ```
 
     d. Postprocess the calculation:

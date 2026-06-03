@@ -12,8 +12,12 @@
                 "--num-nodes", "1",
                 "--mode", "train",
                 "--amp",
-                "--config-yml", "experimental/configs/omat24/mptrj/experiments/direct/equiformer_v3_160k_debug.yml",
-                "--run-dir", "/home/ryoji/equivarient/equiformer_v3/models/omat24/equiformer_v3",
+                // EqV3 Debug
+                // "--config-yml", "experimental/configs/omat24/mptrj/experiments/direct/equiformer_v3_160k_debug.yml",
+                // "--run-dir", "/home/ryoji/equivarient/equiformer_v3/logs/omat24/equiformer_v3",
+                // Transformer Debug
+                "--config-yml", "experimental/configs/omat24/mptrj/experiments/direct/transformer_160k_NoDeNS.yml",
+                "--run-dir", "/home/ryoji/equivarient/equiformer_v3/logs/omat24/transformer",
                 "--print-every", "200",
                 "--seed", "1",
                 "--identifier", "mptrj_direct_160k",
