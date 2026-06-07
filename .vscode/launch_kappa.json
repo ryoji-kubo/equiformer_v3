@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Kappa Evaluation",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/experimental/tasks/matbench_discovery/kappa_run_single_relaxation.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--checkpoint-path", "dummy.pt",
+                "--output-dir", "/home/ryoji/equiformer_v3/results/matbench_discovery/discovery_results/equiformer_v3/2026-05-26-13-52-00-mptrj_direct_160k_eval2/all/kappa"
+            ],
+            "cwd": "${workspaceFolder}",
+            "justMyCode": false
+        }
+    ]
+}

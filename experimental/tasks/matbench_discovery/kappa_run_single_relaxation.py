@@ -305,7 +305,13 @@ def evaluate_tednet_kappa(path):
     df_ml = pd.read_json(pred_file).set_index('material_id')
 
     json_path = DataFiles.phonondb_pbe_103_kappa_no_nac.path
-    df_dft = pd.read_json(json_path).set_index('material_id')
+    df_dft = pd.read_json(json_path)
+    
+    if 'material_id' in df_dft.columns:
+        df_dft = df_dft.set_index('material_id')
+    elif 'mp_id' in df_dft.columns:
+        df_dft = df_dft.set_index('mp_id')
+        df_dft.index.name = 'material_id'
 
     df_ml_metrics = phonons.calc_kappa_metrics_from_dfs(df_ml, df_dft)
 

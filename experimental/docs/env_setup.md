@@ -33,6 +33,6 @@
 ```bash
 pip install ipykernel
 pip install seaborn
-
+pip install "phono3py==3.13.0" "phonopy==2.36.0"
 ```
     

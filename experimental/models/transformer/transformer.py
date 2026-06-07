@@ -221,9 +221,12 @@ class StructureTransformer(nn.Module):
 
         self.atom_energy_head = _build_mlp(embed_dim, encoder_hidden_dim, 1, dropout)
         self.cell_energy_head = _build_mlp(embed_dim, encoder_hidden_dim, 1, dropout)
-        self.force_head = _build_mlp(embed_dim, encoder_hidden_dim, 3, dropout)
-        self.atom_stress_head = _build_mlp(embed_dim, encoder_hidden_dim, 9, dropout)
-        self.cell_stress_head = _build_mlp(embed_dim, encoder_hidden_dim, 9, dropout)
+        
+        if self.regress_forces:
+            self.force_head = _build_mlp(embed_dim, encoder_hidden_dim, 3, dropout)
+        if self.regress_stress:
+            self.atom_stress_head = _build_mlp(embed_dim, encoder_hidden_dim, 9, dropout)
+            self.cell_stress_head = _build_mlp(embed_dim, encoder_hidden_dim, 9, dropout)
 
     def _dense_inputs(
         self,
