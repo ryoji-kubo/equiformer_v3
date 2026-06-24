@@ -92,6 +92,9 @@ model:
   dropout: 0.05
 
   position_scale: 1.0
+  position_representation: cartesian
+  use_rotary_embeddings: False
+  atom_ordering: none
   center_positions: True
   include_cell_energy: True
   include_cell_stress: True

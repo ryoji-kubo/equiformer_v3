@@ -15,8 +15,8 @@ MAIN_PATH="my_main.py"
 
 LOG_DIR="/home/ryoji/equivarient/equiformer_v3/logs/omat24/transformer"
 
-CONFIG_PATH="experimental/configs/omat24/mptrj/experiments/direct/transformer_NoDeNS.yml"
-IDENTIFIER="transformer_mptrj_direct_NoDeNS"
+CONFIG_PATH="experimental/configs/omat24/mptrj/experiments/direct/transformer_NoDeNS_June5_EnergyStress_Epoch@200.yml"
+IDENTIFIER="transformer_mptrj_direct_NoDeNS_June5_EnergyStress_Epoch@200"
 
 PROJECT="equiformer_v3_mptrj"
 

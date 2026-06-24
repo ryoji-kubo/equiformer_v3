@@ -2,7 +2,7 @@ dataset:
   train:
     format: ase_db
     src:
-      - dataset/mptrj/aselmdb_uncorrected_total_energy_160k_nodes
+      - dataset/mptrj/aselmdb_uncorrected_total_energy_nodes
     a2g_args:
       r_energy: True
       r_forces: True
@@ -86,9 +86,9 @@ model:
   name: transformer
 
   max_num_elements: 128
-  embed_dim: 768
-  num_heads: 12
-  num_layers: 12
+  embed_dim: 1024
+  num_heads: 16
+  num_layers: 16
   dropout: 0.05
 
   position_scale: 1.0
@@ -106,9 +106,9 @@ model:
 
 
 optim:
-  batch_size: 64
-  grad_accumulation_steps: 1
-  eval_batch_size: 64
+  batch_size: 32
+  grad_accumulation_steps: 2
+  eval_batch_size: 32
   load_balancing: atoms
   num_workers: 8
   lr_initial: 0.0002

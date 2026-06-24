@@ -227,6 +227,16 @@ def main(
     table_str = _format_table(metrics_full, metrics_10k, metrics_uniq)
     print(table_str)
 
+    # Save discovery metrics to CSV file before running potentially slow RMSD calculations
+    df_metrics = pd.DataFrame({
+        "full": metrics_full,
+        "10k": metrics_10k,
+        "unique": metrics_uniq,
+    }).T
+    metrics_csv_path = os.path.join(input_dir, "discovery_metrics.csv")
+    df_metrics.to_csv(metrics_csv_path, index_label="subset")
+    print(f"Successfully saved discovery metrics to: {metrics_csv_path}")
+
     # --- Batch RMSD vs DFT reference structures ---
     print('Reading geometry optimization json file')
     df_geo_opt = pd.read_json(input_json_path, lines=True).set_index(ID_COL)
@@ -300,16 +310,6 @@ def main(
         f"n_sym_ops_mae={metrics_all[str(Key.n_sym_ops_mae)]:.4f}, "
         f"sym_match={metrics_all[str(Key.symmetry_match)]:.3f}"
     )
-
-    # Save metrics to CSV files
-    df_metrics = pd.DataFrame({
-        "full": metrics_full,
-        "10k": metrics_10k,
-        "unique": metrics_uniq,
-    }).T
-    metrics_csv_path = os.path.join(input_dir, "discovery_metrics.csv")
-    df_metrics.to_csv(metrics_csv_path, index_label="subset")
-    print(f"Successfully saved discovery metrics to: {metrics_csv_path}")
 
     geo_metrics_csv_path = os.path.join(input_dir, "geo_opt_metrics.csv")
     pd.DataFrame([metrics_all]).to_csv(geo_metrics_csv_path, index=False)
