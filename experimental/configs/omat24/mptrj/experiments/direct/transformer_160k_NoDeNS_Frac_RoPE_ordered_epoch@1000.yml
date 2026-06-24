@@ -111,21 +111,21 @@ optim:
   eval_batch_size: 32
   load_balancing: atoms
   num_workers: 8
-  lr_initial: 0.0002
+  lr_initial: 0.0001
 
   optimizer: AdamW
   optimizer_params:
-    weight_decay: 0.001
+    weight_decay: 0.01
     betas: [0.9, 0.95]
 
   scheduler: LambdaLR
   scheduler_params:
     lambda_type: cosine
     warmup_factor: 0.0
-    warmup_epochs: 0.1
+    warmup_epochs: 10
     lr_min_factor: 0.01
 
-  max_epochs: 70
+  max_epochs: 1000
   clip_grad_norm: 100
   ema_decay: 0.999
   eval_every: 20000
