@@ -15,8 +15,8 @@ MAIN_PATH="my_main.py"
 
 LOG_DIR="/home/ryoji/equivarient/equiformer_v3/logs/omat24/transformer"
 
-CONFIG_PATH="experimental/configs/omat24/mptrj/experiments/direct/transformer_160k_NoDeNS.yml"
-IDENTIFIER="transformer_mptrj_direct_160k_NoDeNS"
+CONFIG_PATH="experimental/configs/omat24/mptrj/experiments/direct/transformer_NoDeNS_200M.yml"
+IDENTIFIER="transformer_200M_mptrj_direct_NoDeNS_Frac_RoPE_ordered"
 
 PROJECT="equiformer_v3_mptrj"
 
